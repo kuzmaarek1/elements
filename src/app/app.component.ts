@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { FilterInputComponent } from '../filter-input/filter-input.component';
 import { CommonModule } from '@angular/common';
 
 export interface PeriodicElement {
@@ -26,18 +29,61 @@ const ELEMENT_DATA: PeriodicElement[] = [
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatDialogModule,
+    EditDialogComponent,
+    FilterInputComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = [
+    'position',
+    'name',
+    'weight',
+    'symbol',
+    'actions',
+  ];
   dataSource = new MatTableDataSource<PeriodicElement>();
+
+  filterValue = '';
+
+  onFilterChange(value: string) {
+    this.filterValue = value;
+    this.applyFilter();
+  }
+
+  applyFilter() {
+    this.dataSource.filter = this.filterValue;
+  }
+
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {
     setTimeout(() => {
       this.dataSource.data = ELEMENT_DATA;
       console.log(this.dataSource);
     }, 2000);
+  }
+
+  openEditDialog(element: PeriodicElement) {
+    const dialogRef = this.dialog.open(EditDialogComponent, {
+      data: { ...element },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const index = this.dataSource.data.findIndex(
+          (e) => e.position === result.position
+        );
+        if (index > -1) {
+          this.dataSource.data[index] = result;
+          this.dataSource._updateChangeSubscription();
+        }
+      }
+    });
   }
 }

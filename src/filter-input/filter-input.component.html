@@ -1,0 +1,9 @@
+<mat-form-field appearance="outline" class="filter-field">
+  <mat-label>Filter elements</mat-label>
+  <input
+    matInput
+    [(ngModel)]="value"
+    (ngModelChange)="onInputChange($event)"
+    placeholder="Type to filter..."
+  />
+</mat-form-field>
