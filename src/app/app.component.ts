@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FilterInputComponent } from '../filter-input/filter-input.component';
 import { CommonModule } from '@angular/common';
 
@@ -33,6 +34,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     CommonModule,
     MatTableModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     EditDialogComponent,
     FilterInputComponent,
   ],
@@ -50,6 +52,22 @@ export class AppComponent implements OnInit {
   dataSource = new MatTableDataSource<PeriodicElement>();
 
   filterValue = '';
+  isLoading = true;
+
+  constructor(private dialog: MatDialog, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    this.dataSource.filterPredicate = (data, filter) => {
+      const dataStr = Object.values(data).join(' ').toLowerCase();
+      return dataStr.includes(filter);
+    };
+
+    new Promise((resolve) => setTimeout(resolve, 2000)).then(() => {
+      this.dataSource.data = ELEMENT_DATA;
+      this.isLoading = false;
+      this.cdr.detectChanges();
+    });
+  }
 
   onFilterChange(value: string) {
     this.filterValue = value;
@@ -57,16 +75,7 @@ export class AppComponent implements OnInit {
   }
 
   applyFilter() {
-    this.dataSource.filter = this.filterValue;
-  }
-
-  constructor(private dialog: MatDialog) {}
-
-  ngOnInit() {
-    setTimeout(() => {
-      this.dataSource.data = ELEMENT_DATA;
-      console.log(this.dataSource);
-    }, 2000);
+    this.dataSource.filter = this.filterValue.trim().toLowerCase();
   }
 
   openEditDialog(element: PeriodicElement) {
