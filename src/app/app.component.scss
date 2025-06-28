@@ -5,10 +5,36 @@ table {
 h1 {
   text-align: center;
 }
-
-.loader-container {
+.loader-container,
+.element-tile {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 300px;
+  color: white;
+  border-radius: 4px;
+}
+
+.tile-content {
+  text-align: center;
+  line-height: 1.2;
+}
+
+.tile-content .number {
+  font-size: 0.8em;
+  opacity: 0.8;
+}
+
+.tile-content .symbol {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.tile-content .name {
+  font-size: 0.9em;
+  opacity: 0.9;
+}
+
+.tile-content .weight {
+  font-size: 0.8em;
+  opacity: 0.8;
 }

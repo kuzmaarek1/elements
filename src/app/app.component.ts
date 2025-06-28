@@ -1,34 +1,36 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
-import { PeriodicTableComponent } from '../periodic-table/periodic-table.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FilterInputComponent } from '../filter-input/filter-input.component';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { Observable } from 'rxjs';
+
+import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { FilterInputComponent } from '../filter-input/filter-input.component';
+import { PeriodicTableComponent } from '../periodic-table/periodic-table.component';
 import { AtomComponent } from '../atom/atom.component';
 import { ReactAtomLoaderComponent } from '../react-atom-loader/react-atom-loader.component';
 
-export interface PeriodicElement {
-  position: number;
-  name: string;
-  weight: number;
-  symbol: string;
-}
+import { PeriodicElement } from '../store/periodic-table.state';
+import {
+  loadElementsSuccess, // <-- importujemy sukces zamiast loadElements
+  setFilter,
+  updateElement,
+} from '../store/periodic-table.actions';
+import {
+  selectFilteredElements,
+  selectLoading,
+  selectFilter,
+} from '../store/periodic-table.selectors';
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
+import { Store } from '@ngrx/store';
+import { PeriodicTableState } from '../store/periodic-table.state';
+import { PeriodicTableService } from './services/periodic-table.service';
+
+interface AppState {
+  periodicTable: PeriodicTableState;
+}
 
 @Component({
   selector: 'app-table',
@@ -38,6 +40,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatTableModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatGridListModule,
     EditDialogComponent,
     FilterInputComponent,
     PeriodicTableComponent,
@@ -47,7 +50,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   displayedColumns: string[] = [
     'position',
     'name',
@@ -55,33 +58,33 @@ export class AppComponent implements OnInit {
     'symbol',
     'actions',
   ];
-  dataSource = new MatTableDataSource<PeriodicElement>();
 
-  filterValue = '';
-  isLoading = true;
+  elements$: Observable<PeriodicElement[]>;
+  loading$: Observable<boolean>;
+  filter$: Observable<string>;
 
-  constructor(private dialog: MatDialog, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private dialog: MatDialog,
+    private store: Store<AppState>,
+    private periodicTableService: PeriodicTableService // <-- wstrzykujemy serwis
+  ) {
+    this.elements$ = this.store.select(selectFilteredElements);
+    this.loading$ = this.store.select(selectLoading);
+    this.filter$ = this.store.select(selectFilter);
 
-  ngOnInit() {
-    this.dataSource.filterPredicate = (data, filter) => {
-      const dataStr = Object.values(data).join(' ').toLowerCase();
-      return dataStr.includes(filter);
-    };
+    // Zamiast dispatchować loadElements,
+    // subskrybujemy dane z serwisu i dispatchujemy loadElementsSuccess z wynikami
+    this.periodicTableService.getElements().subscribe((elements: any) => {
+      this.store.dispatch(loadElementsSuccess({ elements }));
+    });
 
-    new Promise((resolve) => setTimeout(resolve, 2000)).then(() => {
-      this.dataSource.data = ELEMENT_DATA;
-      this.isLoading = false;
-      this.cdr.detectChanges();
+    this.loading$.subscribe((value) => {
+      console.log('Loading state:', value);
     });
   }
 
   onFilterChange(value: string) {
-    this.filterValue = value;
-    this.applyFilter();
-  }
-
-  applyFilter() {
-    this.dataSource.filter = this.filterValue.trim().toLowerCase();
+    this.store.dispatch(setFilter({ filter: value }));
   }
 
   openEditDialog(element: PeriodicElement) {
@@ -91,14 +94,31 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        const index = this.dataSource.data.findIndex(
-          (e) => e.position === result.position
-        );
-        if (index > -1) {
-          this.dataSource.data[index] = result;
-          this.dataSource._updateChangeSubscription();
-        }
+        this.store.dispatch(updateElement({ element: result }));
       }
     });
+  }
+
+  getCategoryColor(category: string): string {
+    switch (category) {
+      case 'alkali metal':
+        return '#f44336';
+      case 'alkaline earth metal':
+        return '#ff9800';
+      case 'transition metal':
+        return '#9c27b0';
+      case 'post-transition metal':
+        return '#3f51b5';
+      case 'metalloid':
+        return '#009688';
+      case 'nonmetal':
+        return '#4caf50';
+      case 'halogen':
+        return '#2196f3';
+      case 'noble gas':
+        return '#9e9e9e';
+      default:
+        return '#607d8b';
+    }
   }
 }

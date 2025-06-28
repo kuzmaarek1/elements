@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { PeriodicElement } from '../app/app.component';
+import { PeriodicElement } from '../store/periodic-table.state';
 
 @Component({
   selector: 'app-edit-dialog',
