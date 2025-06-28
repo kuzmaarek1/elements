@@ -3,6 +3,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { PeriodicTableComponent } from '../periodic-table/periodic-table.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FilterInputComponent } from '../filter-input/filter-input.component';
 import { CommonModule } from '@angular/common';
@@ -37,6 +38,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatProgressSpinnerModule,
     EditDialogComponent,
     FilterInputComponent,
+    PeriodicTableComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
