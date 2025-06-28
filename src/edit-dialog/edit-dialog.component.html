@@ -1,21 +1,22 @@
-<h2 mat-dialog-title>Edit Element</h2>
-<div mat-dialog-content>
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="data.name" />
-  </mat-form-field>
+ <h2 mat-dialog-title>Edit Element</h2>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="data.name" />
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Weight</mat-label>
-    <input matInput type="number" [(ngModel)]="data.weight" />
-  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Weight</mat-label>
+      <input matInput type="number" [(ngModel)]="data.weight" />
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Symbol</mat-label>
-    <input matInput [(ngModel)]="data.symbol" />
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="cancel()">Cancel</button>
-  <button mat-button color="primary" (click)="save()">Save</button>
+    <mat-form-field>
+      <mat-label>Symbol</mat-label>
+      <input matInput [(ngModel)]="data.symbol" />
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="cancel()">Cancel</button>
+    <button mat-button color="primary" (click)="save()">Save</button>
+  </div>
 </div>
