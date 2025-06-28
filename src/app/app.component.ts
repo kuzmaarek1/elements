@@ -7,6 +7,8 @@ import { PeriodicTableComponent } from '../periodic-table/periodic-table.compone
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FilterInputComponent } from '../filter-input/filter-input.component';
 import { CommonModule } from '@angular/common';
+import { AtomComponent } from '../atom/atom.component';
+import { ReactAtomLoaderComponent } from '../react-atom-loader/react-atom-loader.component';
 
 export interface PeriodicElement {
   position: number;
@@ -39,6 +41,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
     EditDialogComponent,
     FilterInputComponent,
     PeriodicTableComponent,
+    AtomComponent,
+    ReactAtomLoaderComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

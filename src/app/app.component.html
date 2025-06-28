@@ -45,4 +45,10 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
   <app-periodic-table></app-periodic-table>
+  <h2>Model atomu sodu (Na)</h2>
+  <app-atom [shells]="[2, 8, 1]"></app-atom>
+
+  <h2>Model atomu węgla (C)</h2>
+  <app-atom [shells]="[2, 4]"></app-atom>
+  <app-react-atom-loader></app-react-atom-loader>
 </ng-template>

@@ -1,0 +1,27 @@
+.loader-container {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.atom-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.nucleus {
+  fill: #61dafb;
+}
+
+.orbital {
+  stroke: #61dafb;
+  stroke-width: 1.5;
+  fill: none;
+  opacity: 0.6;
+}
+
+.electron {
+  fill: #61dafb;
+}
