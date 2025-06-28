@@ -30,3 +30,28 @@ export const selectFilteredElements = createSelector(
     );
   }
 );
+
+export const selectCurrentPage = createSelector(
+  selectPeriodicTableState,
+  (state) => state.currentPage
+);
+
+export const selectPageSize = createSelector(
+  selectPeriodicTableState,
+  (state) => state.pageSize
+);
+
+export const selectPagedElements = createSelector(
+  selectFilteredElements,
+  selectCurrentPage,
+  selectPageSize,
+  (elements, page, size) => {
+    const start = page * size;
+    return elements.slice(start, start + size);
+  }
+);
+
+export const selectElementsCount = createSelector(
+  selectFilteredElements,
+  (elements) => elements.length
+);

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { Observable } from 'rxjs';
@@ -14,14 +15,20 @@ import { ReactAtomLoaderComponent } from '../react-atom-loader/react-atom-loader
 
 import { PeriodicElement } from '../store/periodic-table.state';
 import {
-  loadElementsSuccess, // <-- importujemy sukces zamiast loadElements
+  loadElementsSuccess,
   setFilter,
+  setCurrentPage,
+  setPageSize,
   updateElement,
 } from '../store/periodic-table.actions';
 import {
   selectFilteredElements,
   selectLoading,
   selectFilter,
+  selectPagedElements,
+  selectElementsCount,
+  selectCurrentPage,
+  selectPageSize,
 } from '../store/periodic-table.selectors';
 
 import { Store } from '@ngrx/store';
@@ -40,6 +47,7 @@ interface AppState {
     MatTableModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
     MatGridListModule,
     EditDialogComponent,
     FilterInputComponent,
@@ -63,17 +71,25 @@ export class AppComponent {
   loading$: Observable<boolean>;
   filter$: Observable<string>;
 
+  pagedElements$: Observable<PeriodicElement[]>;
+  elementsCount$: Observable<number>;
+  currentPage$: Observable<number>;
+  pageSize$: Observable<number>;
+
   constructor(
     private dialog: MatDialog,
     private store: Store<AppState>,
-    private periodicTableService: PeriodicTableService // <-- wstrzykujemy serwis
+    private periodicTableService: PeriodicTableService
   ) {
     this.elements$ = this.store.select(selectFilteredElements);
     this.loading$ = this.store.select(selectLoading);
     this.filter$ = this.store.select(selectFilter);
+    this.pagedElements$ = this.store.select(selectPagedElements);
+    this.elementsCount$ = this.store.select(selectElementsCount);
+    this.currentPage$ = this.store.select(selectCurrentPage);
+    this.pageSize$ = this.store.select(selectPageSize);
 
-    // Zamiast dispatchować loadElements,
-    // subskrybujemy dane z serwisu i dispatchujemy loadElementsSuccess z wynikami
+    console.log(this.elementsCount$);
     this.periodicTableService.getElements().subscribe((elements: any) => {
       this.store.dispatch(loadElementsSuccess({ elements }));
     });
@@ -81,6 +97,14 @@ export class AppComponent {
     this.loading$.subscribe((value) => {
       console.log('Loading state:', value);
     });
+    this.elementsCount$.subscribe((value) => {
+      console.log('Loading state:', value);
+    });
+  }
+
+  onPageChange(event: any) {
+    this.store.dispatch(setCurrentPage({ page: event.pageIndex }));
+    this.store.dispatch(setPageSize({ size: event.pageSize }));
   }
 
   onFilterChange(value: string) {
@@ -98,27 +122,30 @@ export class AppComponent {
       }
     });
   }
-
   getCategoryColor(category: string): string {
     switch (category) {
       case 'alkali metal':
-        return '#f44336';
+        return '#1565c0';
       case 'alkaline earth metal':
-        return '#ff9800';
+        return '#1e88e5';
       case 'transition metal':
-        return '#9c27b0';
+        return '#0d47a1';
       case 'post-transition metal':
-        return '#3f51b5';
+        return '#42a5f5';
       case 'metalloid':
-        return '#009688';
+        return '#26a69a';
       case 'nonmetal':
-        return '#4caf50';
+        return '#d32f2f';
       case 'halogen':
-        return '#2196f3';
+        return '#7b1fa2';
       case 'noble gas':
-        return '#9e9e9e';
+        return '#4fc3f7';
+      case 'lanthanide':
+        return '#b71c1c';
+      case 'actinide':
+        return '#880e4f';
       default:
-        return '#607d8b';
+        return '#78909c';
     }
   }
 }

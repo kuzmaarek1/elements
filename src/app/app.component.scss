@@ -5,6 +5,49 @@ table {
 h1 {
   text-align: center;
 }
+
+.custom-row {
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
+
+.mat-mdc-table {
+  border-collapse: separate !important;
+  border-spacing: 0 3px !important; /* pionowe odstępy */
+  width: 100%;
+}
+
+.mat-mdc-table {
+  background-color: white;
+}
+.mat-mdc-header-row {
+  color: black;
+}
+
+.mat-mdc-header-cell,
+.mat-mdc-cell {
+  border: none;
+}
+
+.mat-mdc-row .cdk-column-symbol,
+.mat-mdc-row .cdk-column-position {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.mat-mdc-row .cdk-column-position {
+  font-weight: 600;
+}
+
+.cdk-column-position,
+.cdk-column-name,
+.cdk-column-weight,
+.cdk-column-symbol {
+  color: black;
+  text-align: center;
+}
+
 .loader-container,
 .element-tile {
   display: flex;

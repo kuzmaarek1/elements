@@ -14,3 +14,13 @@ export const updateElement = createAction(
   '[Periodic Table] Update Element',
   props<{ element: PeriodicElement }>()
 );
+
+export const setCurrentPage = createAction(
+  '[PagignationTable] Set Current Page',
+  props<{ page: number }>()
+);
+
+export const setPageSize = createAction(
+  '[PagignationTable] Set Page Size',
+  props<{ size: number }>()
+);

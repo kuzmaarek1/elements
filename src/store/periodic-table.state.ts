@@ -8,6 +8,9 @@ export interface PeriodicElement {
 
 export interface PeriodicTableState {
   elements: PeriodicElement[];
+  currentPage: number;
+  pageSize: number;
+  elementsCount?: number;
   loading: boolean;
   filter: string;
 }

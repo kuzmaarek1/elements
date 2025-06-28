@@ -74,6 +74,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
     symbol: 'Ne',
     category: 'noble gas',
   },
+  {
+    position: 11,
+    name: 'Neon',
+    weight: 20.1797,
+    symbol: 'Ne',
+    category: 'noble gas',
+  },
 ];
 
 @Injectable({ providedIn: 'root' })

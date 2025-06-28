@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-atom',
-  standalone: true, // jeśli używasz standalone component
-  imports: [CommonModule], // <-- dodaj ten import
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './atom.component.html',
   styleUrls: ['./atom.component.css'],
 })
