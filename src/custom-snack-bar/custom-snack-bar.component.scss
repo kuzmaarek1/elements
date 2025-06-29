@@ -1,0 +1,26 @@
+.custom-snackbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  margin: -16px -16px;
+  width: 100%;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.icon {
+  margin-right: 8px;
+}
+.message {
+  flex: 1;
+}
+
+.mdc-snackbar__label {
+  padding: 0px;
+}
+
+.mat-mdc-snackbar-surface {
+  padding: 0px;
+}

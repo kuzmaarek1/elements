@@ -4,6 +4,7 @@ export interface PeriodicElement {
   weight: number;
   symbol: string;
   category: string;
+  backgroundColor?: string;
 }
 
 export interface PeriodicTableState {

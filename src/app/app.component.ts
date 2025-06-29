@@ -34,6 +34,7 @@ import {
 import { Store } from '@ngrx/store';
 import { PeriodicTableState } from '../store/periodic-table.state';
 import { PeriodicTableService } from './services/periodic-table.service';
+import { CATEGORY_COLORS } from '../constants/index';
 
 interface AppState {
   periodicTable: PeriodicTableState;
@@ -113,7 +114,10 @@ export class AppComponent {
 
   openEditDialog(element: PeriodicElement) {
     const dialogRef = this.dialog.open(EditDialogComponent, {
-      data: { ...element },
+      data: {
+        ...element,
+        backgroundColor: this.getCategoryColor(element.category),
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -123,29 +127,6 @@ export class AppComponent {
     });
   }
   getCategoryColor(category: string): string {
-    switch (category) {
-      case 'alkali metal':
-        return '#1565c0';
-      case 'alkaline earth metal':
-        return '#1e88e5';
-      case 'transition metal':
-        return '#0d47a1';
-      case 'post-transition metal':
-        return '#42a5f5';
-      case 'metalloid':
-        return '#26a69a';
-      case 'nonmetal':
-        return '#d32f2f';
-      case 'halogen':
-        return '#7b1fa2';
-      case 'noble gas':
-        return '#4fc3f7';
-      case 'lanthanide':
-        return '#b71c1c';
-      case 'actinide':
-        return '#880e4f';
-      default:
-        return '#78909c';
-    }
+    return CATEGORY_COLORS[category] || '#78909c';
   }
 }

@@ -1,0 +1,7 @@
+<div
+  class="custom-snackbar"
+  [ngStyle]="{ 'background-color': data.color || '#323232' }"
+>
+  <mat-icon class="icon">{{ data.icon || "info" }}</mat-icon>
+  <span class="message">{{ data.message }}</span>
+</div>
