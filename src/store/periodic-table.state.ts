@@ -15,3 +15,7 @@ export interface PeriodicTableState {
   loading: boolean;
   filter: string;
 }
+
+export interface AppState {
+  periodicTable: PeriodicTableState;
+}

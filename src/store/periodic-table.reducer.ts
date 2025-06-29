@@ -25,6 +25,10 @@ export const periodicTableReducer = createReducer(
     pageSize: 5,
     loading: false,
   })),
+  on(PeriodicTableActions.loadSuccess, (state) => ({
+    ...state,
+    loading: false,
+  })),
   on(PeriodicTableActions.setFilter, (state, { filter }) => ({
     ...state,
     currentPage: 0,

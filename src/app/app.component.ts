@@ -1,19 +1,21 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { Observable } from 'rxjs';
-
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { FilterInputComponent } from '../filter-input/filter-input.component';
 import { PeriodicTableComponent } from '../periodic-table/periodic-table.component';
 import { AtomComponent } from '../atom/atom.component';
 import { ReactAtomLoaderComponent } from '../react-atom-loader/react-atom-loader.component';
-
 import { PeriodicElement } from '../store/periodic-table.state';
+import { AppState } from '../store/periodic-table.state';
+import { PeriodicTableService } from './services/periodic-table.service';
+import { CATEGORY_COLORS } from '../constants/index';
 import {
   loadElementsSuccess,
   setFilter,
@@ -30,15 +32,6 @@ import {
   selectCurrentPage,
   selectPageSize,
 } from '../store/periodic-table.selectors';
-
-import { Store } from '@ngrx/store';
-import { PeriodicTableState } from '../store/periodic-table.state';
-import { PeriodicTableService } from './services/periodic-table.service';
-import { CATEGORY_COLORS } from '../constants/index';
-
-interface AppState {
-  periodicTable: PeriodicTableState;
-}
 
 @Component({
   selector: 'app-table',
