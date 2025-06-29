@@ -81,14 +81,14 @@ export const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 export const CATEGORY_COLORS: Record<string, string> = {
-  'alkali metal': '#1565c0',
-  'alkaline earth metal': '#1e88e5',
-  'transition metal': '#0d47a1',
-  'post-transition metal': '#42a5f5',
-  'metalloid': '#26a69a',
-  'nonmetal': '#d32f2f',
-  'halogen': '#7b1fa2',
-  'noble gas': '#4fc3f7',
-  'lanthanide': '#b71c1c',
-  'actinide': '#880e4f',
+  'alkali metal': 'linear-gradient(45deg, #5c8ee8, #82aaff)',           
+  'alkaline earth metal': 'linear-gradient(45deg, #82aaff, #a0c4ff)',  
+  'transition metal': 'linear-gradient(45deg, #4c6ef5, #74a9f7)',       
+  'post-transition metal': 'linear-gradient(45deg, #84b9f3, #a6cef8)', 
+  'metalloid': 'linear-gradient(45deg, #4db6ac, #81cfcf)',              
+  'nonmetal': 'linear-gradient(45deg, #ef5350, #f58a8a)',               
+  'halogen': 'linear-gradient(45deg, #a084c9, #b9a4d9)',                
+  'noble gas': 'linear-gradient(45deg, #81d4fa, #a4e4ff)',             
+  'lanthanide': 'linear-gradient(45deg, #e57373, #f2a5a5)',            
+  'actinide': 'linear-gradient(45deg, #b39ddb, #c4b3e0)',               
 };

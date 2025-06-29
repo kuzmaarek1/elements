@@ -2,8 +2,51 @@ table {
   width: 100%;
 }
 
-h1 {
-  text-align: center;
+.h1 {
+  padding-left: -20px;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.header h1 {
+  margin-left: -20px;
+}
+
+.input-fiter {
+  padding-top: 30px;
+}
+
+.spinner-container {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-container {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .custom-row {
@@ -27,6 +70,7 @@ h1 {
 .mat-mdc-header-cell,
 .mat-mdc-cell {
   border: none;
+  background: transparent;
 }
 
 .mat-mdc-row .cdk-column-symbol,
@@ -43,23 +87,36 @@ h1 {
 .cdk-column-position,
 .cdk-column-name,
 .cdk-column-weight,
-.cdk-column-symbol {
+.cdk-column-symbol,
+.cdk-column-actions {
   color: black;
   text-align: center;
 }
 
-.loader-container,
-.element-tile {
+.mat-mdc-outlined-button:not(:disabled) {
+  color: black;
+  border: 1px solid black;
+}
+
+.loader-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: black;
   border-radius: 4px;
+}
+
+.element-tile {
+  display: none;
 }
 
 .tile-content {
   text-align: center;
   line-height: 1.2;
+}
+
+.cdk-column-actions {
+  width: 20%;
 }
 
 .tile-content .number {
@@ -80,4 +137,40 @@ h1 {
 .tile-content .weight {
   font-size: 0.8em;
   opacity: 0.8;
+}
+
+@media (max-width: 690px) {
+  .spinner-container {
+    width: 100%;
+    height: 50vh;
+  }
+
+  .header-container {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .header {
+    margin-left: -30px;
+  }
+
+  .table-container {
+    display: none;
+  }
+
+  .element-tile {
+    display: flex;
+  }
+
+  .input-fiter {
+    padding-top: 0px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .mobile-grid {
+    padding: 20px;
+  }
 }

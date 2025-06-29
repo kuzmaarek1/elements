@@ -21,6 +21,6 @@ This is an Angular-based application that simulates data loading on startup and 
 To run the project locally:
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ng serve
 ```

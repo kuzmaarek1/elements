@@ -92,7 +92,7 @@ export class EditDialogComponent {
       this.snackBar.openFromComponent(CustomSnackBarComponent, {
         data: {
           message: errors.join(' '),
-          color: '#d32f2f',
+          color: this.data.backgroundColor,
           icon: 'error',
         } as CustomSnackBarData,
         duration: 3000,

@@ -8,8 +8,12 @@
 
 .dialog-title {
   margin-bottom: 16px;
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
+  border: 1px solid black;
+  padding: 20px;
+  border-radius: 30px;
+  color: black;
 }
 
 .dialog-content {
@@ -18,7 +22,10 @@
   justify-content: center;
   align-items: center;
   gap: 16px;
-  width: 100%;
+  border: 1px solid black;
+  background: transparent;
+  padding: 20px;
+  border-radius: 20px;
 }
 
 .dialog-field {
@@ -34,4 +41,41 @@
 
 .mat-mdc-snack-bar-label {
   padding: 0px;
+}
+
+.mdc-button {
+  background-color: transparent;
+}
+
+.mat-mdc-outlined-button:not(:disabled) {
+  color: black;
+  border: 1px solid black;
+}
+/* Border */
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: white;
+}
+/* Font color */
+input.mat-input-element {
+  color: white;
+}
+
+::ng-deep
+  .dialog-field.mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__leading,
+::ng-deep
+  .dialog-field.mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__trailing,
+::ng-deep
+  .dialog-field.mat-mdc-form-field.mat-focused
+  .mdc-notched-outline__notch {
+  border-color: black !important;
+}
+
+::ng-deep .dialog-field .mdc-floating-label {
+  color: black !important;
+}
+
+::ng-deep .dialog-field.mat-focused .mdc-floating-label {
+  color: black !important;
 }

@@ -1,9 +1,6 @@
 <div class="loader-container">
   <svg viewBox="-100 -100 200 200" class="atom-svg">
-    <!-- Jądro -->
     <circle cx="0" cy="0" r="8" class="nucleus" />
-
-    <!-- Grupa 1: 0 stopni -->
     <g>
       <ellipse rx="50" ry="20" class="orbital" />
       <path
@@ -16,9 +13,18 @@
           <mpath href="#orbitPath1" />
         </animateMotion>
       </circle>
+      <circle r="4" class="electron">
+        <animateMotion dur="4s" begin="1.33s" repeatCount="indefinite">
+          <mpath href="#orbitPath1" />
+        </animateMotion>
+      </circle>
+      <circle r="4" class="electron">
+        <animateMotion dur="4s" begin="2.66s" repeatCount="indefinite">
+          <mpath href="#orbitPath1" />
+        </animateMotion>
+      </circle>
     </g>
 
-    <!-- Grupa 2: +60 stopni -->
     <g transform="rotate(60)">
       <ellipse rx="50" ry="20" class="orbital" />
       <path
@@ -33,7 +39,6 @@
       </circle>
     </g>
 
-    <!-- Grupa 3: -60 stopni -->
     <g transform="rotate(-60)">
       <ellipse rx="50" ry="20" class="orbital" />
       <path
@@ -43,6 +48,11 @@
       />
       <circle r="4" class="electron">
         <animateMotion dur="8s" repeatCount="indefinite">
+          <mpath href="#orbitPath3" />
+        </animateMotion>
+      </circle>
+      <circle r="4" class="electron">
+        <animateMotion dur="8s" begin="2.66s" repeatCount="indefinite">
           <mpath href="#orbitPath3" />
         </animateMotion>
       </circle>

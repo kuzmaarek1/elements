@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { FilterInputComponent } from '../filter-input/filter-input.component';
-import { PeriodicTableComponent } from '../periodic-table/periodic-table.component';
-import { AtomComponent } from '../atom/atom.component';
 import { ReactAtomLoaderComponent } from '../react-atom-loader/react-atom-loader.component';
 import { PeriodicElement } from '../store/periodic-table.state';
 import { AppState } from '../store/periodic-table.state';
@@ -38,15 +38,15 @@ import {
   standalone: true,
   imports: [
     CommonModule,
+    MatButtonModule,
     MatTableModule,
     MatDialogModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatGridListModule,
+    MatIconModule,
     EditDialogComponent,
     FilterInputComponent,
-    PeriodicTableComponent,
-    AtomComponent,
     ReactAtomLoaderComponent,
   ],
   templateUrl: './app.component.html',
@@ -83,16 +83,8 @@ export class AppComponent {
     this.currentPage$ = this.store.select(selectCurrentPage);
     this.pageSize$ = this.store.select(selectPageSize);
 
-    console.log(this.elementsCount$);
     this.periodicTableService.getElements().subscribe((elements: any) => {
       this.store.dispatch(loadElementsSuccess({ elements }));
-    });
-
-    this.loading$.subscribe((value) => {
-      console.log('Loading state:', value);
-    });
-    this.elementsCount$.subscribe((value) => {
-      console.log('Loading state:', value);
     });
   }
 
@@ -121,5 +113,12 @@ export class AppComponent {
   }
   getCategoryColor(category: string): string {
     return CATEGORY_COLORS[category] || '#78909c';
+  }
+  getCols(): number {
+    const width = window.innerWidth;
+    if (width < 500) return 1;
+    if (width < 900) return 2;
+    if (width < 1200) return 3;
+    return 4;
   }
 }
